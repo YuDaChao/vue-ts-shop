@@ -18,5 +18,7 @@ export default class Home extends Vue {}
 <style lang="scss" scoped>
 .home {
   font-size: 37.5px;
+  width: 100px;
+  height: 100px;
 }
 </style>

@@ -10,12 +10,10 @@ import {
 import App from "./App.vue";
 import router from "./router";
 
-// rem
-import "@/utils/rem";
-
+// vant样式
 import "vant/lib/index.css";
-import "@/styles/normalize.scss";
-import "@/styles/reset.scss";
+import "@/assets/styles/normalize.scss";
+import "@/assets/styles/reset.scss";
 
 if ("addEventListener" in document) {
   document.addEventListener(
@@ -34,5 +32,5 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount("#app");
