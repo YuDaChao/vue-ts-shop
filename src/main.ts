@@ -4,7 +4,13 @@ import FastClick from "fastclick";
 import {
   Button,
   Tabbar,
-  TabbarItem
+  TabbarItem,
+  Swipe,
+  SwipeItem,
+  Lazyload,
+  Image,
+  Grid,
+  GridItem
 } from "vant";
 
 import App from "./App.vue";
@@ -25,7 +31,11 @@ if ("addEventListener" in document) {
 }
 
 Vue.use(Button);
+Vue.use(Lazyload);
+Vue.use(Image);
 Vue.use(Tabbar).use(TabbarItem);
+Vue.use(Swipe).use(SwipeItem);
+Vue.use(Grid).use(GridItem);
 
 Vue.config.productionTip = false;
 
