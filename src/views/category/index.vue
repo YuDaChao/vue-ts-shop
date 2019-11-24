@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="home">测试</div>
-    <van-button type="primary">按钮</van-button>
+    <div class="home van-hairline--bottom">Category</div>
   </div>
 </template>
 
@@ -12,7 +11,8 @@ import { Component, Vue } from "vue-property-decorator";
   components: {
   }
 })
-export default class Home extends Vue {}
+export default class Category extends Vue {
+}
 </script>
 
 <style lang="scss" scoped>

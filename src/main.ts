@@ -12,8 +12,7 @@ import router from "./router";
 
 // vant样式
 import "vant/lib/index.css";
-import "@/assets/styles/normalize.scss";
-import "@/assets/styles/reset.scss";
+import "@/assets/styles/index.scss";
 
 if ("addEventListener" in document) {
   document.addEventListener(

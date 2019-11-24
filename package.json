@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@better-scroll/core": "^2.0.0-beta.2",
     "callapp-lib": "^2.1.8",
     "core-js": "^2.6.9",
     "cssnano": "^4.1.10",
