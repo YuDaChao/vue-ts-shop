@@ -1,6 +1,6 @@
 <template>
   <div class="v-swipe">
-    <van-swipe :autoplay="3000" v-bind="$attrs">
+    <van-swipe :autoplay="3000" :style="{ height: height }">
       <van-swipe-item
         v-for="(image, index) in images"
         :key="index"
@@ -18,6 +18,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class VSwipe extends Vue {
   @Prop({ default: () => ([]), required: true, type: Array })
   private images!: string[]
+  @Prop({ default: "", required: false, type: String })
+  private height!: string
 }
 </script>
 

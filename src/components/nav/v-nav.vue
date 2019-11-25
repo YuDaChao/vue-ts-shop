@@ -4,11 +4,12 @@
       <div class="v-nav-content">
         <v-nav-item
           v-for="(nav, index) in navList"
+          ref="navItem"
           :key="index"
           :text="nav"
           :isActive="nav === selectedNavItem"
           class="v-nav-item"
-          @click.native="handleChangeNavItem(nav)"
+          @click.native="handleChangeNavItem(nav, index)"
         />
       </div>
     </div>
@@ -20,7 +21,7 @@
           :key="index"
           :isActive="nav === selectedNavItem"
           :class="(index + 1) % 4 !== 0 ? 'm-right' : ''"
-          @click.native="handleChangeNavItem(nav)"
+          @click.native="handleChangeNavItem(nav, index)"
         >
           {{ nav }}
         </v-nav-button>
@@ -65,7 +66,9 @@ export default class VNav extends Vue {
   ];
 
   private mounted() {
-    this.initScroll();
+    this.$nextTick(() => {
+      this.initScroll();
+    })
   }
 
   private beforeDestroy() {
@@ -74,6 +77,7 @@ export default class VNav extends Vue {
     }
   }
 
+  // 初始化betterScroll
   private initScroll(): void {
     // @ts-ignore
     this.bScroll = new BScroll(this.$refs.navScroll, {
@@ -82,9 +86,13 @@ export default class VNav extends Vue {
     });
   }
 
-  private handleChangeNavItem(nav: string): void {
-    console.log(nav)
+  // 处理分类菜单点击
+  private handleChangeNavItem(nav: string, index: number): void {
     this.selectedNavItem = nav;
+    if (this.bScroll && !this.expended) {
+      // 指定滚动的位置
+      this.bScroll.scrollToElement((this.$refs.navItem as any)[index].$el)
+    }
   }
 
   private handleClickNavExtra(): void {

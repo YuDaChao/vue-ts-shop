@@ -1,12 +1,7 @@
 <template>
   <div class="v-nav-cells">
     <van-grid :column-num="column" :border="border" v-bind="$attrs">
-      <van-grid-item v-for="(img, index) in cells.slice(0, column)" :key="index">
-        <van-image :src="img" />
-      </van-grid-item>
-    </van-grid>
-    <van-grid :column-num="column" :border="border" v-bind="$attrs">
-      <van-grid-item v-for="(img, index) in cells.slice(column)" :key="index">
+      <van-grid-item v-for="(img, index) in cells" :key="index">
         <van-image :src="img" />
       </van-grid-item>
     </van-grid>
@@ -17,7 +12,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
-export default class VNavCells extends Vue {
+export default class NavCells extends Vue {
   @Prop({ default: () => ([]), required: true, type: Array })
   private cells!: string[]
   @Prop({ default: 5, required: false, type: Number })

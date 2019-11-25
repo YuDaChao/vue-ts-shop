@@ -2,16 +2,16 @@
   <div class="home">
     <div class="home-header">
       <v-search>
-        <img slot="left" class="home-left-icon" :src="leftIcon" >
+        <img slot="left" class="home-left-icon" src="./images/mi.png" >
         <i slot="right" class="home-right-icon" />
       </v-search>
       <v-nav />
     </div>
     <div class="home-body">
       <!-- 轮播图 -->
-      <v-swipe :images="images" :height="187" indicator-color="#fff" />
+      <v-swipe :images="images" height="187px" indicator-color="#fff" />
       <!-- 菜单导航 -->
-      <v-nav-cells :cells="navCells" />
+      <nav-cells :cells="navCells" />
     </div>
   </div>
 </template>
@@ -22,26 +22,22 @@ import { Component, Vue } from "vue-property-decorator";
 import VSearch from "@/components/search/v-search.vue";
 import VNav from "@/components/nav/v-nav.vue";
 import VSwipe from "@/components/swipe/v-swipe.vue";
-import VNavCells from "@/components/nav-cells/v-nav-cells.vue";
-
-// @ts-ignore
-const homeLeftIcon = require("./images/mi.png");
+import NavCells from "./components/nav-cells/nav-cells.vue";
 
 @Component({
   components: {
     VSearch,
     VNav,
     VSwipe,
-    VNavCells
+    NavCells
   }
 })
 export default class Home extends Vue {
-  private leftIcon: string = homeLeftIcon;
 
   private images: string[] = [
     require("./images/banner_01.jpg"),
     require("./images/banner_02.jpg"),
-    require("./images/banner_03.jpg"),
+    require("./images/banner_03.jpg")
   ];
 
   private navCells: string[] = [
@@ -87,6 +83,7 @@ export default class Home extends Vue {
     top: 82px;
     left: 0;
     right: 0;
+    padding-bottom: 50px;
     background-color: #fff;
   }
 }
