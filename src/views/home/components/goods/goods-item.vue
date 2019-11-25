@@ -1,23 +1,27 @@
 <template>
   <div class="goods-item">
     <div class="goods-item--img">
-      <img class="img" src="../../images/goods/goods_01.jpg" />
+      <img class="img" :src="product.img_url" />
     </div>
     <div class="goods-item--info">
       <div class="goods-item--info-name van-ellipsis center">
-        Redmi Note 8 Pro
+        {{ product.product_name }}
       </div>
       <div class="goods-item--info-brief van-ellipsis center">
-        6400万全场景四摄
+        {{ product.product_brief }}
       </div>
       <div class="goods-item--price center">
-        <span>1299</span>
+        <span>{{ product.product_price }}</span>
         <span class="unit">起</span>
         <span class="price old">
-          <s>1399</s>
+          <s>{{ product.product_org_price }}</s>
         </span>
       </div>
-      <van-button class="goods-item--buy" type="primary" size="small" color="#ea625b"
+      <van-button
+        class="goods-item--buy"
+        type="primary"
+        size="small"
+        color="#ea625b"
         >立即购买</van-button
       >
     </div>
@@ -25,10 +29,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { IProductModel } from "@/api/home/types";
 
 @Component
-export default class GoodsItem extends Vue {}
+export default class GoodsItem extends Vue {
+  @Prop({ default: () => ({}) })
+  private product!: IProductModel;
+}
 </script>
 
 <style lang="scss" scoped>

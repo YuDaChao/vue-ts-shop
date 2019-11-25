@@ -2,10 +2,14 @@
   <div class="home">
     <div class="home-header">
       <v-search>
-        <img slot="left" class="home-left-icon" src="./images/mi.png" >
+        <img slot="left" class="home-left-icon" src="./images/mi.png" />
         <i slot="right" class="home-right-icon" />
       </v-search>
-      <v-nav @on-expended="showOverlay = !showOverlay" />
+      <v-nav
+        :navList="navs"
+        :current.sync="currentNav"
+        @on-expended="showOverlay = !showOverlay"
+      />
     </div>
     <div class="home-body">
       <!-- 轮播图 -->
@@ -16,8 +20,10 @@
       <v-divider />
       <!-- 广告展示区域 -->
       <ad-banner />
+      <!-- 分割线 -->
+      <v-divider bgColor="#fff" />
       <!-- 商品列表 -->
-      <goods-list />
+      <goods-list :products="productList" />
     </div>
     <van-overlay :show="showOverlay" />
   </div>
@@ -25,6 +31,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 
 import VSearch from "@/components/search/v-search.vue";
 import VNav from "@/components/nav/v-nav.vue";
@@ -33,6 +40,10 @@ import VDivider from "@/components/divider/v-divider.vue";
 import NavCells from "./components/nav-cells/nav-cells.vue";
 import AdBanner from "./components/ad-banner/ad-banner.vue";
 import GoodsList from "./components/goods/goods.vue";
+
+import { INavsResponse, IProductResponse, IProductModel } from "@/api/home/types";
+
+const homeModule = namespace("home");
 
 @Component({
   components: {
@@ -46,8 +57,18 @@ import GoodsList from "./components/goods/goods.vue";
   }
 })
 export default class Home extends Vue {
+  @homeModule.State("navList")
+  private navList!: INavsResponse[];
+  @homeModule.State("product")
+  private product!: IProductResponse;
+
+  @homeModule.Action("getNavList")
+  private getNavList!: () => void;
+  @homeModule.Action("getProduct")
+  private getProduct!: () => void;
 
   private showOverlay: boolean = false;
+  private currentNav: number = 0;
 
   private images: string[] = [
     require("./images/banner_01.jpg"),
@@ -67,6 +88,21 @@ export default class Home extends Vue {
     require("./images/nav/nav_09.png"),
     require("./images/nav/nav_10.png")
   ];
+
+  // 导航菜单
+  private get navs(): string[] {
+    return this.navList.map((item: INavsResponse) => item.name);
+  }
+
+  // 商品列表
+  private get productList(): IProductModel[] {
+    return this.product.list
+  }
+
+  private mounted() {
+    this.getNavList();
+    this.getProduct();
+  }
 }
 </script>
 
@@ -79,7 +115,7 @@ export default class Home extends Vue {
     right: 0;
     z-index: 99;
     background: #f2f2f2;
-    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
   .home-left-icon {
     width: 26px;
@@ -91,7 +127,7 @@ export default class Home extends Vue {
     background-image: url("./images/user.png");
     background-position: 50%;
     background-repeat: no-repeat;
-    background-size: 20px 20px
+    background-size: 20px 20px;
   }
   .home-body {
     position: absolute;

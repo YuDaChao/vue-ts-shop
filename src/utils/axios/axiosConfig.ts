@@ -2,7 +2,7 @@ import Qs from "qs";
 import { AxiosResponse, AxiosRequestConfig } from "axios";
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_API,
   // 请求后的数据处理
   transformResponse: [
     (data: AxiosResponse) => {

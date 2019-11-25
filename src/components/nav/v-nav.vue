@@ -7,7 +7,7 @@
           ref="navItem"
           :key="index"
           :text="nav"
-          :isActive="nav === selectedNavItem"
+          :isActive="index === current"
           class="v-nav-item"
           @click.native="handleChangeNavItem(nav, index)"
         />
@@ -19,7 +19,7 @@
         <v-nav-button
           v-for="(nav, index) in navList"
           :key="index"
-          :isActive="nav === selectedNavItem"
+          :isActive="index === current"
           :class="(index + 1) % 4 !== 0 ? 'm-right' : ''"
           @click.native="handleChangeNavItem(nav, index)"
         >
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import BScroll from "@better-scroll/core";
 
 import VNavItem from "./v-nav-item.vue";
@@ -51,30 +51,34 @@ import VNavButton from "./v-nav-button.vue";
   }
 })
 export default class VNav extends Vue {
+  @Prop({ default: () => [], type: Array })
+  private navList!: string[];
+
+  @Prop({ default: "", type: Number })
+  private current!: number;
+
   private bScroll: any = null;
   private expended: boolean = false;
-
-  private selectedNavItem: string = "推荐";
-  private navList: string[] = [
-    "推荐",
-    "手机",
-    "智能",
-    "电视",
-    "笔记本",
-    "家电",
-    "生活周边"
-  ];
 
   private mounted() {
     this.$nextTick(() => {
       this.initScroll();
-    })
+    });
   }
 
   private beforeDestroy() {
     if (this.bScroll) {
-      this.bScroll.destroy()
+      this.bScroll.destroy();
     }
+  }
+
+  @Watch("navList")
+  private handleNavListChange() {
+    this.$nextTick(() => {
+      if (this.bScroll) {
+        this.bScroll.refresh();
+      }
+    });
   }
 
   // 初始化betterScroll
@@ -88,16 +92,16 @@ export default class VNav extends Vue {
 
   // 处理分类菜单点击
   private handleChangeNavItem(nav: string, index: number): void {
-    this.selectedNavItem = nav;
+    this.$emit("update:current", index);
     if (this.bScroll && !this.expended) {
       // 指定滚动的位置
-      this.bScroll.scrollToElement((this.$refs.navItem as any)[index].$el)
+      this.bScroll.scrollToElement((this.$refs.navItem as any)[index].$el);
     }
   }
 
   private handleClickNavExtra(): void {
     this.expended = !this.expended;
-    this.$emit("on-expended", this.expended)
+    this.$emit("on-expended", this.expended);
   }
 }
 </script>
