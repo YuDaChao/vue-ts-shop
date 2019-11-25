@@ -17,6 +17,9 @@
           <s>1399</s>
         </span>
       </div>
+      <van-button class="goods-item--buy" type="primary" size="small" color="#ea625b"
+        >立即购买</van-button
+      >
     </div>
   </div>
 </template>
@@ -41,7 +44,8 @@ export default class GoodsItem extends Vue {}
     }
   }
   .goods-item--info {
-    padding: 8px 12px;
+    padding: 8px 12px 12px;
+    text-align: center;
     .goods-item--info-name {
       font-size: 14px;
       color: rgba(0, 0, 0, 0.87);
@@ -69,6 +73,9 @@ export default class GoodsItem extends Vue {}
           content: "\A5";
         }
       }
+    }
+    .goods-item--buy {
+      margin-top: 6px;
     }
   }
 }
