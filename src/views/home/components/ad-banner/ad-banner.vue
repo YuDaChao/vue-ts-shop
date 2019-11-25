@@ -55,7 +55,7 @@ export default class AdBanner extends Vue {}
     }
     .right-img {
       width: 189px;
-      height: 50%;
+      height: 132px;
     }
   }
   .ad-banner-middle {
@@ -76,6 +76,8 @@ export default class AdBanner extends Vue {}
   }
   .ad-banner--a {
     display: inline-block;
+    width: inherit;
+    height: inherit;
   }
 }
 </style>
