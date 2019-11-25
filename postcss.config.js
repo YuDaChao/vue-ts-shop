@@ -17,9 +17,10 @@ module.exports = {
       mediaQuery: false // 允许在媒体查询中转换`px`
     },
     'cssnano': {
-      preset: 'advanced',
-      autoprefixer: false,
-      'postcss-zindex': false
+      "cssnano-preset-advanced": {
+        zindex: false,
+        autoprefixer: false
+      },
     },
     /* 'postcss-pxtorem': {
       rootValue: 37.5,

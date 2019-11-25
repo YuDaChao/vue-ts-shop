@@ -1,6 +1,6 @@
 <template>
   <div class="v-swipe">
-    <van-swipe :autoplay="3000" :style="{ height: height }">
+    <van-swipe :autoplay="3000" v-bind="$attrs" :style="{ height: height }">
       <van-swipe-item
         v-for="(image, index) in images"
         :key="index"

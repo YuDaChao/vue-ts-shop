@@ -10,7 +10,8 @@ import {
   Lazyload,
   Image,
   Grid,
-  GridItem
+  GridItem,
+  Overlay
 } from "vant";
 
 import App from "./App.vue";
@@ -33,6 +34,7 @@ if ("addEventListener" in document) {
 Vue.use(Button);
 Vue.use(Lazyload);
 Vue.use(Image);
+Vue.use(Overlay);
 Vue.use(Tabbar).use(TabbarItem);
 Vue.use(Swipe).use(SwipeItem);
 Vue.use(Grid).use(GridItem);
