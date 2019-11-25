@@ -97,6 +97,7 @@ export default class VNav extends Vue {
 
   private handleClickNavExtra(): void {
     this.expended = !this.expended;
+    this.$emit("on-expended", this.expended)
   }
 }
 </script>
@@ -146,7 +147,6 @@ export default class VNav extends Vue {
     height: 30px;
     background-color: #f2f2f2;
     box-shadow: -15px 0 15px 0 #f2f2f2;
-    z-index: 100;
     .v-nav-extra-icon {
       display: inline-block;
       width: 100%;

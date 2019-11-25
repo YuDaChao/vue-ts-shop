@@ -11,7 +11,8 @@ import {
   Image,
   Grid,
   GridItem,
-  Overlay
+  Overlay,
+  Divider
 } from "vant";
 
 import App from "./App.vue";
@@ -35,6 +36,7 @@ Vue.use(Button);
 Vue.use(Lazyload);
 Vue.use(Image);
 Vue.use(Overlay);
+Vue.use(Divider);
 Vue.use(Tabbar).use(TabbarItem);
 Vue.use(Swipe).use(SwipeItem);
 Vue.use(Grid).use(GridItem);

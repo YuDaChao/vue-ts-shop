@@ -5,14 +5,19 @@
         <img slot="left" class="home-left-icon" src="./images/mi.png" >
         <i slot="right" class="home-right-icon" />
       </v-search>
-      <v-nav />
+      <v-nav @on-expended="showOverlay = !showOverlay" />
     </div>
     <div class="home-body">
       <!-- 轮播图 -->
       <v-swipe :images="images" height="187px" indicator-color="#fff" />
       <!-- 菜单导航 -->
       <nav-cells :cells="navCells" />
+      <!-- 分割线 -->
+      <v-divider />
+      <!-- 广告展示区域 -->
+      <ad-banner></ad-banner>
     </div>
+    <van-overlay :show="showOverlay" />
   </div>
 </template>
 
@@ -22,17 +27,23 @@ import { Component, Vue } from "vue-property-decorator";
 import VSearch from "@/components/search/v-search.vue";
 import VNav from "@/components/nav/v-nav.vue";
 import VSwipe from "@/components/swipe/v-swipe.vue";
+import VDivider from "@/components/divider/v-divider.vue";
 import NavCells from "./components/nav-cells/nav-cells.vue";
+import AdBanner from "./components/ad-banner/ad_banner.vue";
 
 @Component({
   components: {
     VSearch,
     VNav,
     VSwipe,
-    NavCells
+    NavCells,
+    VDivider,
+    AdBanner
   }
 })
 export default class Home extends Vue {
+
+  private showOverlay: boolean = false;
 
   private images: string[] = [
     require("./images/banner_01.jpg"),
