@@ -114,7 +114,7 @@ export default class Home extends Vue {
     left: 0;
     right: 0;
     z-index: 99;
-    background: #f2f2f2;
+    background: #F5F5F9;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
   .home-left-icon {

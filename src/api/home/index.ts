@@ -11,3 +11,4 @@ export const queryNavs = () => request.get<INavsResponse>("/navs")
  * 获取首页商品列表
  */
 export const queryProductList = () => request.post<IProductResponse>("/product_list")
+

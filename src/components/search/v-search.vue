@@ -26,7 +26,7 @@ export default class VSearch extends Vue {
 <style lang="scss" scoped>
 .v-search {
   height: 52px;
-  background-color: #f2f2f2;
+  background-color: #F5F5F9;
   .v-search-left {
     flex: 0 0 46px;
   }

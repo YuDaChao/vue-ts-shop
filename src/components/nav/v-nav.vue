@@ -107,11 +107,12 @@ export default class VNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/var.scss";
 .v-nav {
   position: relative;
   .v-nav-wrapper {
     margin-right: 50px;
-    background-color: #f2f2f2;
+    background-color: $bg--color;
     white-space: nowrap;
     overflow: hidden;
     .v-nav-content {
@@ -121,11 +122,11 @@ export default class VNav extends Vue {
     }
   }
   .v-nav-wrapper-layer {
-    background-color: #f2f2f2;
+    background-color: $bg--color;
     padding: 0 12px;
     line-height: 30px;
     font-size: 14px;
-    color: #747474;
+    color: #c7c6ca;
     transition: max-height 0.3s ease-in-out;
     overflow: hidden;
     .layer-enter-active,
@@ -149,8 +150,8 @@ export default class VNav extends Vue {
     top: 0;
     width: 50px;
     height: 30px;
-    background-color: #f2f2f2;
-    box-shadow: -15px 0 15px 0 #f2f2f2;
+    background-color: $bg--color;
+    box-shadow: -15px 0 15px 0 $bg--color;
     .v-nav-extra-icon {
       display: inline-block;
       width: 100%;
