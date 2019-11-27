@@ -29,9 +29,9 @@ const home: Module<ICategoryState, any> = {
       }));
     },
     categoryProductList(state: ICategoryState) {
-      const list: ICategoryProductModel[] = [];
+      const list: ICategoryProductModel[][] = [];
       state.category.list.forEach((item: ICategoryModel) => {
-        list.push(...item.category_list);
+        list.push([...item.category_list]);
       });
       return list;
     }

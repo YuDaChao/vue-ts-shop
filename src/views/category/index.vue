@@ -25,44 +25,46 @@
       <div class="category-product--container" ref="productScroll">
         <div class="category-product--content">
           <div
-            v-for="(item, index) in categoryProductList"
+            v-for="(category, index) in categoryProductList"
             :key="index"
             class="category-product--item"
-            :ref="item.view_type === 'cells_auto_fill' ? 'categoryProduct' : ''"
+            ref="categoryProduct"
           >
-            <div
-              class="category-banner"
-              v-if="item.view_type === 'cells_auto_fill'"
-            >
-              <img
-                class="category-banner--img"
-                :src="item.body.items[0].img_url"
-              />
-            </div>
-            <div
-              v-if="item.view_type === 'category_title'"
-              class="category-product-title"
-            >
-              <van-divider>{{ item.body.category_name }}</van-divider>
-            </div>
-            <van-grid
-              v-if="item.view_type === 'category_group'"
-              :border="false"
-              :column-num="3"
-            >
-              <van-grid-item
-                v-for="(product, pIndex) in item.body.items"
-                :key="pIndex"
+            <div v-for="(item, i) in category" :key="i">
+              <div
+                class="category-banner"
+                v-if="item.view_type === 'cells_auto_fill'"
               >
-                <van-image
-                  class="category-product--img"
-                  :src="product.img_url"
+                <img
+                  class="category-banner--img"
+                  :src="item.body.items[0].img_url"
                 />
-                <div class="category-product--name van-ellipsis">
-                  {{ product.product_name }}
-                </div>
-              </van-grid-item>
-            </van-grid>
+              </div>
+              <div
+                v-if="item.view_type === 'category_title'"
+                class="category-product-title"
+              >
+                <van-divider>{{ item.body.category_name }}</van-divider>
+              </div>
+              <van-grid
+                v-if="item.view_type === 'category_group'"
+                :border="false"
+                :column-num="3"
+              >
+                <van-grid-item
+                  v-for="(product, pIndex) in item.body.items"
+                  :key="pIndex"
+                >
+                  <van-image
+                    class="category-product--img"
+                    :src="product.img_url"
+                  />
+                  <div class="category-product--name van-ellipsis">
+                    {{ product.product_name }}
+                  </div>
+                </van-grid-item>
+              </van-grid>
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +75,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+import Debounce from "debounce-decorator";
 import BScroll from "@better-scroll/core";
 import VSearch from "@/components/search/v-search.vue";
 import {
@@ -111,6 +114,8 @@ export default class Category extends Vue {
   // 当前分类索引
   private current: number = 0;
 
+  private listHeight: number[] = [];
+
   private mounted() {
     this.getCategory();
     this.$nextTick(() => {
@@ -130,15 +135,13 @@ export default class Category extends Vue {
     this.$nextTick(() => {
       if (this.navbarScroll) {
         this.navbarScroll.refresh();
+      }
+      if (this.contentScroll) {
         this.contentScroll.refresh();
       }
+      // 计算高度
+      this.calculateHeight();
     });
-  }
-
-  @Watch("current")
-  private handleCurrentChange(val: number): void {
-    /* const category: ICategoryModel = this.category.list[val];
-    this.categoryProductList = category.category_list; */
   }
 
   // 初始化beeterScroll
@@ -155,6 +158,9 @@ export default class Category extends Vue {
       click: true,
       probeType: 3
     });
+
+    // 监听右侧滚动
+    this.contentScroll.on("scroll", this.handleRightScroll.bind(this));
   }
 
   // 点击左侧分类
@@ -166,7 +172,38 @@ export default class Category extends Vue {
     }
     if (this.contentScroll) {
       // 指定滚动的位置
-      this.contentScroll.scrollToElement((this.$refs.categoryProduct as any)[index]);
+      this.contentScroll.scrollToElement(
+        (this.$refs.categoryProduct as any)[index]
+      );
+    }
+  }
+
+  // 计算右侧内容区域每一块的高度，并保存在数组中
+  private calculateHeight() {
+    const els = this.$refs.categoryProduct;
+    let height = 0;
+    const listHeight = [0];
+    Array.prototype.slice.call(els).forEach((el: Element) => {
+      height += el.clientHeight;
+      listHeight.push(height);
+    });
+    this.listHeight = listHeight;
+  }
+
+  // 监听右侧滚动
+  @Debounce(50)
+  private handleRightScroll({ y }: { y: number }) {
+    for (let i = 0; i < this.listHeight.length; i++) {
+      const height1 = this.listHeight[i];
+      const height2 = this.listHeight[i + 1];
+      const _y = Math.abs(y);
+      if (height2 && _y >= height1 && _y < height2) {
+        this.current = i;
+        if (this.contentScroll) {
+          // 指定滚动的位置
+          this.navbarScroll.scrollToElement((this.$refs.navbarItem as any)[i]);
+        }
+      }
     }
   }
 }
@@ -208,8 +245,8 @@ export default class Category extends Vue {
         text-align: center;
         font-size: 14px;
         color: #3c3c3c;
-        white-space: nowrap;
         border-bottom: 1px solid #fff;
+        overflow: hidden;
         &.current {
           color: $primary--color;
           background-color: #fff;
