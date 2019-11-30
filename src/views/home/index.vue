@@ -1,36 +1,39 @@
 <template>
   <div class="home">
-    <div class="home-header">
-      <v-search>
-        <img slot="left" class="home-left-icon" src="./images/mi.png" />
-        <i slot="right" class="home-right-icon" />
-      </v-search>
-      <v-nav
-        :navList="navs"
-        :current.sync="currentNav"
-        @on-expended="showOverlay = !showOverlay"
-      />
+    <div v-if="!loading" class="home-container">
+      <div class="home-header">
+        <v-search>
+          <img slot="left" class="home-left-icon" src="./images/mi.png" />
+          <i slot="right" class="home-right-icon" />
+        </v-search>
+        <v-nav
+          :navList="navs"
+          :current.sync="currentNav"
+          @on-expended="showOverlay = !showOverlay"
+        />
+      </div>
+      <div class="home-body">
+        <!-- 轮播图 -->
+        <v-swipe :images="images" height="187px" indicator-color="#fff" />
+        <!-- 菜单导航 -->
+        <nav-cells :cells="navCells" />
+        <!-- 分割线 -->
+        <v-divider />
+        <!-- 广告展示区域 -->
+        <ad-banner />
+        <!-- 分割线 -->
+        <v-divider bgColor="#fff" />
+        <!-- 商品列表 -->
+        <goods-list :products="productList" />
+      </div>
     </div>
-    <div class="home-body">
-      <!-- 轮播图 -->
-      <v-swipe :images="images" height="187px" indicator-color="#fff" />
-      <!-- 菜单导航 -->
-      <nav-cells :cells="navCells" />
-      <!-- 分割线 -->
-      <v-divider />
-      <!-- 广告展示区域 -->
-      <ad-banner />
-      <!-- 分割线 -->
-      <v-divider bgColor="#fff" />
-      <!-- 商品列表 -->
-      <goods-list :products="productList" />
-    </div>
+    <v-loading v-else />
     <van-overlay :show="showOverlay" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
 import VSearch from "@/components/search/v-search.vue";
@@ -41,7 +44,13 @@ import NavCells from "./components/nav-cells/nav-cells.vue";
 import AdBanner from "./components/ad-banner/ad-banner.vue";
 import GoodsList from "./components/goods/goods.vue";
 
-import { INavsResponse, IProductResponse, IProductModel } from "@/api/home/types";
+import VLoading from "@/components/loading/v-loading.vue";
+
+import {
+  INavsResponse,
+  IProductResponse,
+  IProductModel
+} from "@/api/home/types";
 
 const homeModule = namespace("home");
 
@@ -53,7 +62,8 @@ const homeModule = namespace("home");
     NavCells,
     VDivider,
     AdBanner,
-    GoodsList
+    GoodsList,
+    VLoading
   }
 })
 export default class Home extends Vue {
@@ -69,6 +79,8 @@ export default class Home extends Vue {
 
   private showOverlay: boolean = false;
   private currentNav: number = 0;
+
+  private loading: boolean = true;
 
   private images: string[] = [
     require("./images/banner_01.jpg"),
@@ -96,12 +108,17 @@ export default class Home extends Vue {
 
   // 商品列表
   private get productList(): IProductModel[] {
-    return this.product.list
+    return this.product.list;
   }
 
   private mounted() {
     this.getNavList();
     this.getProduct();
+  }
+
+  @Watch("navList")
+  private handleNavListChange() {
+    this.loading = false;
   }
 }
 </script>
@@ -114,7 +131,7 @@ export default class Home extends Vue {
     left: 0;
     right: 0;
     z-index: 99;
-    background: #F5F5F9;
+    background: #f5f5f9;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
   .home-left-icon {

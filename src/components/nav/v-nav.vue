@@ -60,12 +60,6 @@ export default class VNav extends Vue {
   private bScroll: any = null;
   private expended: boolean = false;
 
-  private mounted() {
-    this.$nextTick(() => {
-      this.initScroll();
-    });
-  }
-
   private beforeDestroy() {
     if (this.bScroll) {
       this.bScroll.destroy();
@@ -77,17 +71,21 @@ export default class VNav extends Vue {
     this.$nextTick(() => {
       if (this.bScroll) {
         this.bScroll.refresh();
+      } else {
+        this.initScroll();
       }
     });
   }
 
   // 初始化betterScroll
   private initScroll(): void {
-    // @ts-ignore
-    this.bScroll = new BScroll(this.$refs.navScroll, {
-      scrollX: true,
-      probeType: 3
-    });
+    if (this.$refs.navScroll) {
+      // @ts-ignore
+      this.bScroll = new BScroll(this.$refs.navScroll, {
+        scrollX: true,
+        probeType: 3
+      });
+    }
   }
 
   // 处理分类菜单点击
