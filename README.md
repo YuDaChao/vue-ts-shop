@@ -1,4 +1,4 @@
-# vue-activity-h5
+# vue-ts-shop
 
 ## Project setup
 ```
