@@ -16,6 +16,7 @@
       </van-tabbar-item>
     </van-tabbar>
     <router-view></router-view>
+    <v-top />
   </div>
 </template>
 

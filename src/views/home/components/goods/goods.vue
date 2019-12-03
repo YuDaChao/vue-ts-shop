@@ -5,6 +5,7 @@
       :key="item.product_id"
       :product="item"
       :class="{ 'm-right': index % 2 === 0 }"
+      @on-click="handleClick"
     />
   </div>
 </template>
@@ -24,6 +25,10 @@ import { IProductModel } from "@/api/home/types";
 export default class GoodsList extends Vue {
   @Prop({ default: () => ([]) })
   private products!: IProductModel[];
+
+  private handleClick(product: IProductModel): void {
+    this.$emit("on-buy", product)
+  }
 }
 </script>
 

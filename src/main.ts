@@ -12,12 +12,20 @@ import {
   Grid,
   GridItem,
   Overlay,
-  Divider
+  Divider,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
+  CellGroup,
+  Cell,
+  Icon
 } from "vant";
 
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+
+import VToTop from "./components/to-top/v-to-top.vue";
 
 // vant样式
 import "vant/lib/index.css";
@@ -41,6 +49,11 @@ Vue.use(Divider);
 Vue.use(Tabbar).use(TabbarItem);
 Vue.use(Swipe).use(SwipeItem);
 Vue.use(Grid).use(GridItem);
+Vue.use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton);
+Vue.use(CellGroup).use(Cell)
+Vue.use(Icon);
+
+Vue.component("v-top", VToTop)
 
 Vue.config.productionTip = false;
 

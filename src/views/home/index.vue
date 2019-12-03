@@ -24,7 +24,7 @@
         <!-- 分割线 -->
         <v-divider bgColor="#fff" />
         <!-- 商品列表 -->
-        <goods-list :products="productList" />
+        <goods-list :products="productList" @on-buy="handleClickBuy" />
       </div>
     </div>
     <v-loading v-else />
@@ -119,6 +119,10 @@ export default class Home extends Vue {
   @Watch("navList")
   private handleNavListChange() {
     this.loading = false;
+  }
+
+  private handleClickBuy(product: IProductModel): void {
+    this.$router.push(`detail/${product.product_id}`)
   }
 }
 </script>

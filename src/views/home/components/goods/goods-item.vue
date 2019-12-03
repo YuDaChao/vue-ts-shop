@@ -22,6 +22,7 @@
         type="primary"
         size="small"
         color="#ea625b"
+        @click="handleClickBuy(product)"
         >立即购买</van-button
       >
     </div>
@@ -36,6 +37,10 @@ import { IProductModel } from "@/api/home/types";
 export default class GoodsItem extends Vue {
   @Prop({ default: () => ({}) })
   private product!: IProductModel;
+
+  private handleClickBuy(product: IProductModel): void {
+    this.$emit("on-click", product)
+  }
 }
 </script>
 
