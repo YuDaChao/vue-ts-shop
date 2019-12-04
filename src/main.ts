@@ -18,7 +18,11 @@ import {
   GoodsActionButton,
   CellGroup,
   Cell,
-  Icon
+  Icon,
+  Checkbox,
+  Stepper,
+  SwipeCell,
+  SubmitBar
 } from "vant";
 
 import App from "./App.vue";
@@ -52,6 +56,10 @@ Vue.use(Grid).use(GridItem);
 Vue.use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton);
 Vue.use(CellGroup).use(Cell)
 Vue.use(Icon);
+Vue.use(Checkbox);
+Vue.use(Stepper);
+Vue.use(SwipeCell);
+Vue.use(SubmitBar);
 
 Vue.component("v-top", VToTop)
 

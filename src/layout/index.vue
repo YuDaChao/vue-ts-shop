@@ -68,3 +68,10 @@ export default class Layout extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.van-tabbar {
+  box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+  z-index: 101 !important;
+}
+</style>

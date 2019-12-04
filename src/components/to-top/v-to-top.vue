@@ -8,7 +8,7 @@
 import { Vue, Component } from "vue-property-decorator";
 
 @Component
-export default class classVToTop extends Vue {
+export default class VToTop extends Vue {
   private scrollTop: number = 0;
 
   private get show(): boolean {
